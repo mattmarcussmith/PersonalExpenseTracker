@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using System.IO;
 using System.Text.Json;
 
 namespace PersonalExpenseTracker.Dal.AppContext
