@@ -332,6 +332,14 @@ __pycache__/
 *.odx.cs
 *.xsd.cs
 
+# Ignore appsettings files
+/PersonalExpenseTracker.Api/appsettings.json
+/PersonalExpenseTracker.Api/appsettings.Development.json
+
+# Ignore launchSettings
+/PersonalExpenseTracker.Client/Properties/launchSettings.json
+/PersonalExpenseTracker.Api/Properties/launchSettings.json
+
 # OpenCover UI analysis results
 OpenCover/
 
