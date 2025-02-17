@@ -22,13 +22,12 @@ namespace PersonalExpenseTracker.Bll.Services.CategoryService
         {
             try
             {
-                Log.Information("Getting all categories...");
+                Log.Information("Fetching all categories...");
 
                 var categories = await _categoryRepository.GetAllCategoriesAsync();
 
                 return categories.Select(category => new CategoryDto
                 {
-                    Id = category.Id,
                     Name = category.Name
                 }).ToList();
 
@@ -44,14 +43,14 @@ namespace PersonalExpenseTracker.Bll.Services.CategoryService
         {
             try
             {
-                Log.Information($"Getting category with id {id}...");
+                Log.Information($"Fetching category with id {id}...");
 
-               var getCategoryById = await _categoryRepository.GetCategoryByIdAsync(id);
+               var category = await _categoryRepository.GetCategoryByIdAsync(id);
 
                 return new CategoryDto
                 {
-                    Id = getCategoryById.Id,
-                    Name = getCategoryById.Name
+                    Id = category.Id,
+                    Name = category.Name
                 };
             }
             catch (Exception ex)
@@ -96,7 +95,7 @@ namespace PersonalExpenseTracker.Bll.Services.CategoryService
 
                 var category = new Category
                 {
-                    Id = categoryDto.Id,
+                    Id = id,
                     Name = categoryDto.Name
                 };
 

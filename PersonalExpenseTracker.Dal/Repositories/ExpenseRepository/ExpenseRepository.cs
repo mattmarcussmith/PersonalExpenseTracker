@@ -42,7 +42,7 @@ namespace PersonalExpenseTracker.Dal.Repositories.ExpenseRepository
             return expense;
         }
 
-        public async Task<Expense> UpdateExpenseAsync(Expense expense)
+        public async Task<Expense> UpdateExpenseAsync(int id, Expense expense)
         {
             var existingExpense = await _context.Expenses
                 .FirstOrDefaultAsync(e => e.Id == expense.Id);
@@ -52,6 +52,7 @@ namespace PersonalExpenseTracker.Dal.Repositories.ExpenseRepository
                 throw new ArgumentException($"Expense with Id {expense.Id} not found...");
             }
 
+            existingExpense.Id = id;
             existingExpense.Title = expense.Title;
             existingExpense.Amount = expense.Amount;
             existingExpense.Description = expense.Description;
