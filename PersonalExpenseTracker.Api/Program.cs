@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using PersonalExpenseTracker.Bll.Services.CategoryService;
+using PersonalExpenseTracker.Bll.Services.ExpenseService;
 using PersonalExpenseTracker.Dal.AppContext;
+using PersonalExpenseTracker.Dal.Repositories.CategoryRepository;
+using PersonalExpenseTracker.Dal.Repositories.ExpenseRepository;
 using Serilog;
 
 
@@ -11,14 +15,18 @@ Log.Logger = new LoggerConfiguration()
 
 builder.Host.UseSerilog();
 
-builder.Services.AddControllers();
 builder.Services.AddDbContext<Context>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     options.UseSqlServer(connectionString);
 });
 
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IExpenseRepository, ExpenseRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IExpenseService, ExpenseService>();
 
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

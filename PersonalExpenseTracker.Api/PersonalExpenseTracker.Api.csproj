@@ -25,8 +25,4 @@
     <ProjectReference Include="..\PersonalExpenseTracker.Shared\PersonalExpenseTracker.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>

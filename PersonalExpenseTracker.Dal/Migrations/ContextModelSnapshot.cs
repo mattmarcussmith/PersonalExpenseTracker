@@ -36,7 +36,7 @@ namespace PersonalExpenseTracker.Dal.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("PersonalExpenseTracker.Dal.Entities.Expense", b =>
@@ -69,7 +69,7 @@ namespace PersonalExpenseTracker.Dal.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Expenses");
+                    b.ToTable("Expenses", (string)null);
                 });
 
             modelBuilder.Entity("PersonalExpenseTracker.Dal.Entities.Expense", b =>

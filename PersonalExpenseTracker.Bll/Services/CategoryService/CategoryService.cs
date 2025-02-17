@@ -2,8 +2,8 @@
 using Microsoft.Extensions.Logging;
 using PersonalExpenseTracker.Dal.Entities;
 using PersonalExpenseTracker.Dal.Repositories.CategoryRepository;
+using PersonalExpenseTracker.Shared.Dto;
 using Serilog;
-using Serilog.Core;
 
 namespace PersonalExpenseTracker.Bll.Services.CategoryService
 {
@@ -18,91 +18,102 @@ namespace PersonalExpenseTracker.Bll.Services.CategoryService
             _logger = logger;
         }
 
-        public async Task<IEnumerable<Category?>> GetAllCategoriesAsync()
+        public async Task<IEnumerable<CategoryDto>> GetAllCategoriesAsync()
         {
             try
             {
                 Log.Information("Getting all categories...");
 
-                return await _categoryRepository.GetAllCategoriesAsync();
+                var categories = await _categoryRepository.GetAllCategoriesAsync();
+
+                return categories.Select(category => new CategoryDto
+                {
+                    Id = category.Id,
+                    Name = category.Name
+                }).ToList();
 
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error getting all categories");
-
-                throw new Exception(ex.Message);
+                throw;
             }
         }
 
-        public async Task<Category?> GetCategoryByIdAsync(int id)
+        public async Task<CategoryDto> GetCategoryByIdAsync(int id)
         {
             try
             {
                 Log.Information($"Getting category with id {id}...");
 
-                return await _categoryRepository.GetCategoryByIdAsync(id);
+               var getCategoryById = await _categoryRepository.GetCategoryByIdAsync(id);
+
+                return new CategoryDto
+                {
+                    Id = getCategoryById.Id,
+                    Name = getCategoryById.Name
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error getting category by id");
 
-                throw new Exception(ex.Message);
-            
+                throw;
             }
         }
 
-        public async Task<Category> UpdateCategoryAsync(Category category)
+        public async Task<CategoryDto> AddCategoryAsync(CategoryDto categoryDto)
         {
             try
             {
-                if (category == null)
+                Log.Information($"Fetching category, {categoryDto.Name}...");
+
+                var category = new Category
                 {
-                    _logger.LogError("Category cannot be null");
-                    throw new ArgumentNullException(nameof(category), "Category cannot be null");
+                    Name = categoryDto.Name,
+                };
 
-                }
+                var addCategory = await _categoryRepository.AddCategoryAsync(category);
 
-                if (category.Name == null)
+                return new CategoryDto
                 {
-                    _logger.LogError("Category name cannot be null");
-                    throw new ArgumentNullException(nameof(category.Name), "Category name cannot be null");
-                }
+                    Id = addCategory.Id,
+                    Name = addCategory.Name
+                };
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error adding category");
+                throw;
+            }
+        }
 
-                Log.Information($"Updating category, {category.Name}...");
+        public async Task<CategoryDto> UpdateCategoryAsync(int id, CategoryDto categoryDto)
+        {
+            try
+            {
+                Log.Information($"Updating category, {categoryDto.Name}...");
 
-                return await _categoryRepository.UpdateCategoryAsync(category);
+                var category = new Category
+                {
+                    Id = categoryDto.Id,
+                    Name = categoryDto.Name
+                };
+
+                var updatingCategory = await _categoryRepository.UpdateCategoryAsync(id, category);
+
+                return new CategoryDto
+                {
+                    Id = updatingCategory.Id,
+                    Name = updatingCategory.Name
+                };
 
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error updating category");
 
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public async Task AddCategoryAsync(Category category)
-        {
-            if (category == null)
-            {
-                throw new ArgumentNullException(nameof(category), "Category cant be null");
-            }
-
-            if (string.IsNullOrWhiteSpace(category.Name))
-            {
-                throw new ArgumentException("Category name cannot be empty");
-            }
-
-            try
-            {
-                Log.Information($"Adding category, {category.Name}...");
-
-                await _categoryRepository.AddCategoryAsync(category);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Error adding category");
+                throw;
             }
         }
 
@@ -118,7 +129,7 @@ namespace PersonalExpenseTracker.Bll.Services.CategoryService
             {
                 Log.Error(ex, "Error deleting category");
 
-                throw new Exception(ex.Message);
+                throw;
             }
         }
 

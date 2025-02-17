@@ -9,8 +9,8 @@ namespace PersonalExpenseTracker.Bll.Services.ExpenseService
 {
     public interface IExpenseService
     {
-        Task<IEnumerable<Expense?>> GetAllExpensesAsync();
-        Task<Expense?> GetExpenseByIdAsync(int id);
+        Task<IEnumerable<Expense>> GetAllExpensesAsync();
+        Task<Expense> GetExpenseByIdAsync(int id);
         Task AddExpenseAsync(Expense expense);
         Task<Expense> UpdateExpenseAsync(Expense expense);
         Task DeleteExpenseAsync(int id);

@@ -9,9 +9,9 @@ namespace PersonalExpenseTracker.Dal.Repositories.ExpenseRepository
 {
     public interface IExpenseRepository
     {
-        Task<IEnumerable<Expense?>> GetAllExpensesAsync();
-        Task<Expense?> GetExpenseByIdAsync(int id);
-        Task AddExpenseAsync(Expense expense);
+        Task<IEnumerable<Expense>> GetAllExpensesAsync();
+        Task<Expense> GetExpenseByIdAsync(int id);
+        Task<Expense> AddExpenseAsync(Expense expense);
         Task<Expense> UpdateExpenseAsync(Expense expense);
         Task DeleteExpenseAsync(int id);
     }

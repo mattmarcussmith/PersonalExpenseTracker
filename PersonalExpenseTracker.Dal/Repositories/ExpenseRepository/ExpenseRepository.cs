@@ -12,27 +12,34 @@ namespace PersonalExpenseTracker.Dal.Repositories.ExpenseRepository
             _context = context;
         }
 
-        public async Task<IEnumerable<Expense?>> GetAllExpensesAsync()
+        public async Task<IEnumerable<Expense>> GetAllExpensesAsync()
         {
-            var expenses = await _context.Expenses.ToListAsync();
-
-            return expenses;
+            return await _context.Expenses.ToListAsync();
         }
 
-        public async Task<Expense?> GetExpenseByIdAsync(int id)
+        public async Task<Expense> GetExpenseByIdAsync(int id)
         {
             var expense = await _context.Expenses.FindAsync(id);
 
+            if (id <= 0)
+            {
+                throw new ArgumentException($"Expense with ID {id} not found...");
+            }
+
             if (expense == null)
             {
-                throw new KeyNotFoundException($"Expense with Id {id} not found...");
+                throw new ArgumentException($"Expense with ID {id} not found...");
             }
+
             return expense;
         }
 
-        public async Task AddExpenseAsync(Expense expense)
+        public async Task<Expense> AddExpenseAsync(Expense expense)
         {
             await _context.Expenses.AddAsync(expense);
+            await _context.SaveChangesAsync();
+
+            return expense;
         }
 
         public async Task<Expense> UpdateExpenseAsync(Expense expense)
@@ -42,7 +49,7 @@ namespace PersonalExpenseTracker.Dal.Repositories.ExpenseRepository
 
             if (existingExpense == null)
             {
-                throw new KeyNotFoundException($"Expense with Id {expense.Id} not found...");
+                throw new ArgumentException($"Expense with Id {expense.Id} not found...");
             }
 
             existingExpense.Title = expense.Title;
@@ -59,9 +66,14 @@ namespace PersonalExpenseTracker.Dal.Repositories.ExpenseRepository
         {
             var expense = await _context.Expenses.FindAsync(id);
 
+            if (id <= 0)
+            {
+                throw new ArgumentException($"Expense with ID {id} not found...");
+            }
+
             if (expense == null)
             {
-                throw new KeyNotFoundException($"Expense with Id {id} not found...");
+                throw new ArgumentException($"Expense with Id {id} not found...");
             }
 
             _context.Expenses.Remove(expense);
