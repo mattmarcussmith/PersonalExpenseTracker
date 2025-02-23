@@ -1,13 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PersonalExpenseTracker.Bll.Services.CategoryService;
-using PersonalExpenseTracker.Dal.Entities;
 using PersonalExpenseTracker.Shared.Dto;
 
 namespace PersonalExpenseTracker.Api.Controllers
 {
-
-
     [Route("api/[controller]")]
     [ApiController]
     public class CategoryController : ControllerBase

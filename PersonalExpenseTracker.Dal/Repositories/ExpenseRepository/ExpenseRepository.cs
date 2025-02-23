@@ -78,6 +78,7 @@ namespace PersonalExpenseTracker.Dal.Repositories.ExpenseRepository
             }
 
             _context.Expenses.Remove(expense);
+            await _context.SaveChangesAsync();
         }
     }
 }

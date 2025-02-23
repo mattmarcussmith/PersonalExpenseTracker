@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using PersonalExpenseTracker.Dal.Entities;
 using PersonalExpenseTracker.Dal.Repositories.CategoryRepository;
 using PersonalExpenseTracker.Shared.Dto;
@@ -28,6 +27,7 @@ namespace PersonalExpenseTracker.Bll.Services.CategoryService
 
                 return categories.Select(category => new CategoryDto
                 {
+                    Id = category.Id,
                     Name = category.Name
                 }).ToList();
 
@@ -120,7 +120,7 @@ namespace PersonalExpenseTracker.Bll.Services.CategoryService
         {
             try
             {
-                Log.Information($"Deleting category with id {id}...");
+                Log.Information($"Deleting category with ID {id}...");
 
                 await _categoryRepository.DeleteCategoryAsync(id);
             }

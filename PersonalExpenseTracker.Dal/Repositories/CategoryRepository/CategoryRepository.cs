@@ -75,6 +75,7 @@ namespace PersonalExpenseTracker.Dal.Repositories.CategoryRepository
             }
 
             _context.Categories.Remove(category);
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -34,7 +34,7 @@ namespace PersonalExpenseTracker.Bll.Services.ExpenseService
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while getting all expenses");
+                _logger.LogError(ex, "An error occurred while getting all expenses...");
                 throw;
             }
 
@@ -59,7 +59,7 @@ namespace PersonalExpenseTracker.Bll.Services.ExpenseService
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while getting expense by id");
+                _logger.LogError(ex, "An error occurred while getting expense by ID...");
                 throw;
             }
         }
@@ -91,7 +91,7 @@ namespace PersonalExpenseTracker.Bll.Services.ExpenseService
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while adding expense");
+                _logger.LogError(ex, "An error occurred while adding expense...");
                 throw;
             }
         }
@@ -124,7 +124,7 @@ namespace PersonalExpenseTracker.Bll.Services.ExpenseService
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while updating expense");
+                _logger.LogError(ex, "An error occurred while updating expense...");
                 throw;
             }
         }
@@ -137,7 +137,7 @@ namespace PersonalExpenseTracker.Bll.Services.ExpenseService
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while deleting expense");
+                _logger.LogError(ex, "An error occurred while deleting expense...");
                 throw;
             }
         }
